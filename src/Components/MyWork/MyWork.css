@@ -1,0 +1,211 @@
+.mywork{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    margin: 80px 170px;
+}
+
+.mywork-title {
+    position: relative;
+}
+.mywork-title h1{
+    padding: 0px 30px;
+    font-size: 80px;
+    font-weight: 600;
+}
+.mywork-title img{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+}
+.mywork-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+}
+.mywork-container img{
+    box-sizing: border-box;
+    width: 419px;
+    height: 280px;
+    transition: 0.3s;
+    cursor:pointer;
+}
+.mywork-container img:hover{
+    transform: scale(1.10);
+    border: 4px solid #ff00ff;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+.mywork-showmore{
+    display: flex;
+    gap: 15px;
+    border-radius: 50px;
+    border: 2px solid white;
+    padding: 30px 60px;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 80px;
+    transition: 0.6s;
+    cursor: pointer;
+}
+.mywork-showmore:hover{
+    gap: 30px;
+    transition: 0.6s;
+}
+@media(max-width:768px){
+   .mywork{
+    gap: 50px;
+    margin: 50px 70px;
+    align-items: start;
+   }
+   .mywork-title h1{
+    padding: 0;
+    font-size: 50px;
+    font-weight: 600;
+   }
+   .mywork-title img{
+    width: 130px;
+    margin-right: -20px;
+   }
+   .mywork-container{
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+   }
+   .mywork-container img{
+    width: 100%;
+    height: 100%;
+   }
+   .mywork-showmore{
+    padding: 20px 40px;
+    font-size: 18px;
+    margin: 50px auto;
+    cursor: pointer;
+   }
+}
+
+
+
+
+/* new add*/
+.mywork {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.mywork-title h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  
+}
+
+.mywork-title img {
+  width: 150px;
+  margin-top: 10px;
+}
+
+
+.project-card {
+  background-color:black;
+  padding: 20px;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
+
+.project-img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.project-card h3 {
+  margin: 15px 0 10px;
+  font-size: 1.2rem;
+}
+
+.technologies {
+  font-size: 0.9rem;
+  color:#fff;
+  margin-bottom: 10px;
+}
+
+.github-link {
+  display: inline-block;
+  padding: 8px 15px;
+  background-color: #24292f;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.github-link:hover {
+  background-color: #444;
+}
+
+@media (max-width: 768px) {
+  .mywork {
+    gap: 50px;
+    margin: 50px 20px;
+    align-items: center;
+  }
+
+  .mywork-title h1 {
+    font-size: 40px;
+    padding: 0;
+  }
+
+  .mywork-title img {
+    width: 100px;
+    margin-right: -10px;
+  }
+
+  .mywork-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .project-card {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .project-img {
+    width: 90%; /* ensures image fits in card */
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .project-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+  }
+
+  .technologies {
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+    word-wrap: break-word; /* ensures long tech names wrap */
+  }
+
+  .github-link {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    white-space: nowrap; /* prevents breaking mid-link */
+  }
+
+  .mywork-showmore {
+    padding: 20px 40px;
+    font-size: 18px;
+    margin: 50px auto;
+  }
+}
