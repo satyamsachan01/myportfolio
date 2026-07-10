@@ -1,50 +1,17 @@
 import React from "react";
-import "./MyWork.css";
-import theme_pattern from "../../assets/theme_pattern.svg";
-import mywork_data from "../../assets/mywork_data";
-import arrow_icon from "../../assets/arrow_icon.svg";
+import leatherCity from "../../assets/projects/leather-city.png";
+import leatherStories from "../../assets/projects/leather-stories.png";
+import ampereHome from "../../assets/projects/ampere-home.png";
+import ampereShop from "../../assets/projects/ampere-shop.png";
 
-const MyWork = () => {
-  return (
-    <div id="work" className="mywork">
-      {/* Section Title */}
-      <div className="mywork-title">
-        <h1>My Projects</h1>
-        <img src={theme_pattern} alt="pattern" />
-      </div>
+const Project = ({number, title, type, description, url, images, tone}) => <article className={`project-showcase ${tone}`}>
+  <div className="project-copy"><div className="project-meta"><span>{number}</span><span>{type}</span></div><h3>{title}</h3><p>{description}</p><a href={url} target="_blank" rel="noreferrer">Visit live website <span>↗</span></a></div>
+  <a className="project-stage" href={url} target="_blank" rel="noreferrer" aria-label={`Open ${title}`}><div className="browser browser-back"><div className="browser-bar"><i/><i/><i/></div><img src={images[1]} alt={`${title} secondary page`} /></div><div className="browser browser-front"><div className="browser-bar"><i/><i/><i/><span>{url.replace('https://','')}</span></div><img src={images[0]} alt={`${title} website`} /></div></a>
+</article>;
 
-      {/* Projects Grid */}
-      <div className="mywork-container">
-        {mywork_data.map((project) => (
-          <div key={project.w_no} className="project-card">
-            <img
-              src={project.w_img}
-              alt={project.w_name}
-              className="project-img"
-            />
-            <h3>{project.w_name}</h3>
-            <p className="technologies">
-              Technologies: {project.technologies.join(", ")}
-            </p>
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="github-link"
-            >
-              View Link
-            </a>
-          </div>
-        ))}
-      </div>
-
-      {/* Show More Button */}
-      <div className="mywork-showmore">
-        <p>Show More</p>
-        <img src={arrow_icon} alt="arrow" />
-      </div>
-    </div>
-  );
-};
-
+const MyWork = () => <section id="work" className="mywork section-block"><div className="section-shell"><div className="section-heading"><span className="section-no">03</span><div><p className="kicker">Selected client work</p><h2>Real websites.<br/><span>Real business impact.</span></h2></div></div>
+<Project number="01" title="The Leather Laundry" type="WordPress · Luxury Services" description="A premium, content-rich WordPress experience with location discovery, service journeys and customer proof designed to build trust at every click." url="https://theleatherlaundry.com/" images={[leatherCity,leatherStories]} tone="wine"/>
+<Project number="02" title="Ampere Solutions" type="WordPress · WooCommerce" description="A complete electronics commerce experience combining product discovery, repair-service booking and a distinctive black-and-gold retail identity." url="https://amperesolutions.store/" images={[ampereHome,ampereShop]} tone="gold"/>
+<article className="security-case"><div className="security-copy"><div className="project-meta"><span>03</span><span>WordPress Security Case Study</span></div><h3>From infected to <span>secure.</span></h3><p>The Leather Laundry suffered a malware infection. I investigated the compromise, removed malicious files and redirects, restored clean operation, and verified the site against blacklist scanners.</p><ul><li>Malicious code & redirects removed</li><li>WordPress installation cleaned and hardened</li><li>External scan returned “No Malware Found”</li></ul><a href="https://theleatherlaundry.com/" target="_blank" rel="noreferrer">View recovered website <span>↗</span></a></div><div className="scan-stack"><div className="scan-card danger"><div className="scan-head"><span>!</span><div><strong>Warning: Malware Detected</strong><small>Immediate action required</small></div></div><div className="scan-site">theleatherlaundry.com</div><div className="risk-bar"><i/></div><div className="risk-labels"><span>Clean</span><span>Critical</span></div><b>BEFORE</b></div><div className="scan-card safe"><div className="scan-head"><span>✓</span><div><strong>No Malware Found</strong><small>Site is not blacklisted</small></div></div><div className="scan-site">theleatherlaundry.com</div><div className="risk-bar"><i/></div><div className="risk-labels"><span>Minimal</span><span>Critical</span></div><b>AFTER</b></div></div></article>
+</div></section>;
 export default MyWork;

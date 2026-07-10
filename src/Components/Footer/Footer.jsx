@@ -1,36 +1,3 @@
 import React from "react";
-import "./Footer.css";
-import user_icon from "../../assets/user_icon.svg";
-
-const Footer = () => {
-  return (
-    <div className="footer">
-      <div className="footer-top">
-        <div className="footer-top-left">
-          <h1>//S.Sachan.//</h1>
-          <p>Made by Satyam Sachan</p>
-        </div>
-        <div className="footer-top-right">
-          <div className="footer-email-input">
-            <img src={user_icon} />
-            <input type="email" placeholder="Enter your email"></input>
-          </div>
-          <div className="footer-subscribe">Subscribe</div>
-        </div>
-      </div>
-      <hr />
-      <div className="footer-bottom">
-        <p className="footer-bottom-left">
-          @ 2025 Satyam Sachan. All rights reserve{" "}
-        </p>
-        <div className="footer-bottom-right">
-          <p>Term of Services</p>
-          <p>Privacy Policy</p>
-          <p>Connect with me</p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
+const Footer=()=> <footer className="footer section-shell"><a className="brand" href="#home"><span className="brand-mark">SS</span><span>Satyam<span className="accent">.</span></span></a><p>Designing & developing digital experiences from Kanpur, India.</p><div className="footer-links"><a href="mailto:sachansatyam19@gmail.com">Email</a><a href="#work">Projects</a><a href="/Resume.pdf" target="_blank" rel="noreferrer">Resume</a></div><div className="footer-bottom"><span>© {new Date().getFullYear()} Satyam Sachan</span><a href="#home">Back to top ↑</a></div></footer>;
 export default Footer;
