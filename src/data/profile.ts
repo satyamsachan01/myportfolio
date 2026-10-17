@@ -37,8 +37,8 @@ export const profile = {
   /** Your portrait, from /public. Empty hides it. */
   photo: `${base}satyam.webp`,
   links: {
-    linkedin: '',
-    github: '',
+    linkedin: 'https://www.linkedin.com/in/satyam-sachan01/',
+    github: 'https://github.com/satyamsachan01',
     twitter: '',
   },
 
