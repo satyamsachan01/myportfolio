@@ -1,0 +1,40 @@
+:root {
+  /* Palette */
+  --bg: #07080b;
+  --bg-2: #111319;
+  --bg-3: #171a22;
+  --line: rgba(200, 205, 214, 0.12);
+  --line-strong: rgba(200, 205, 214, 0.24);
+  --text: #f5f5f5;
+  --text-2: #a4a8b2;
+  --text-3: #6f7480;
+  --accent: #b8c7ff;
+  --metal: #c8cdd6;
+
+  /* World accents */
+  --w-engineering: #b8c7ff;
+  --w-commerce: #e2c49a;
+  --w-search: #8ed8c8;
+  --w-ai: #c3b1ff;
+
+  /* Type */
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: clamp(1.05rem, 0.98rem + 0.3vw, 1.2rem);
+  --fs-xl: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
+  --fs-h2: clamp(2rem, 1.2rem + 3.6vw, 4.4rem);
+  --fs-hero: clamp(2.5rem, 1.1rem + 5.6vw, 6.4rem);
+
+  /* Space */
+  --gutter: clamp(1rem, 0.6rem + 2vw, 2.5rem);
+  --section-y: clamp(5rem, 3rem + 8vw, 10rem);
+  --max: 1280px;
+  --radius: 14px;
+  --radius-sm: 8px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --nav-h: 72px;
+}

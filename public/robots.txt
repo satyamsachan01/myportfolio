@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://digital-satyam-sachan-web.vercel.app/sitemap.xml

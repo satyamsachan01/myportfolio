@@ -1,3 +1,0 @@
-import React from "react";
-const Footer=()=> <footer className="footer section-shell"><a className="brand" href="#home"><span className="brand-mark">SS</span><span>Satyam<span className="accent">.</span></span></a><p>Designing & developing digital experiences from Kanpur, India.</p><div className="footer-links"><a href="mailto:sachansatyam19@gmail.com">Email</a><a href="#work">Projects</a><a href="/Resume.pdf" target="_blank" rel="noreferrer">Resume</a></div><div className="footer-bottom"><span>© {new Date().getFullYear()} Satyam Sachan</span><a href="#home">Back to top ↑</a></div></footer>;
-export default Footer;
