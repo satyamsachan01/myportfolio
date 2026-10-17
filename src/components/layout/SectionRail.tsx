@@ -1,4 +1,5 @@
 import { journey } from '../../data/navigation';
+import { sectionHref } from '../../data/sections';
 import { useActiveSection } from '../../hooks/useActiveSection';
 import { useExperience } from '../../hooks/useExperience';
 import { useSectionLink } from '../../hooks/useSectionLink';
@@ -17,7 +18,7 @@ export function SectionRail() {
       <ol>
         {journey.map((j) => (
           <li key={j.id}>
-            <a href={`/#${j.id}`} onClick={go(j.id)} className={active === j.id ? 'is-active' : ''} aria-current={active === j.id ? 'step' : undefined}>
+            <a href={sectionHref(j.id)} onClick={go(j.id)} className={active === j.id ? 'is-active' : ''} aria-current={active === j.id ? 'step' : undefined}>
               <span className="rail__label"><b>{j.numeral}</b> {j.label}</span>
               <span className={`rail__dot ${j.seal ? 'rail__dot--seal' : ''}`} aria-hidden="true" />
             </a>

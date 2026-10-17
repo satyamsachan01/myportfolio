@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { sectionHref } from '../../data/sections';
 import { AnimatePresence, motion } from 'framer-motion';
 import { commerce } from '../../data/services';
 import { getProject, projects } from '../../data/projects';
@@ -218,7 +219,7 @@ export function Commerce() {
             <p className="empty">No public projects listed for this platform yet.</p>
           )}
           <a
-            href="/#projects"
+            href={sectionHref('projects')}
             className="btn world__cta"
             onClick={(e) => {
               setFilter('ecommerce');

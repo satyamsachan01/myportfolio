@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { navItems } from '../../data/navigation';
+import { sectionHref } from '../../data/sections';
 import { profile } from '../../data/profile';
 import { useActiveSection } from '../../hooks/useActiveSection';
 import { useExperience } from '../../hooks/useExperience';
@@ -53,14 +54,14 @@ export function Navbar() {
               const isActive = item.sections.includes(active);
               return (
                 <li key={item.id}>
-                  <a href={item.id === 'home' ? '/' : `/#${item.id}`} onClick={handle(item.id)} className={isActive ? 'is-active' : ''} aria-current={isActive ? 'true' : undefined}>
+                  <a href={sectionHref(item.id)} onClick={handle(item.id)} className={isActive ? 'is-active' : ''} aria-current={isActive ? 'true' : undefined}>
                     {item.label}
                   </a>
                 </li>
               );
             })}
           </ul>
-          <a href="/#contact" className="btn btn--sm nav__cta" onClick={handle('contact')}>
+          <a href={sectionHref('contact')} className="btn btn--sm nav__cta" onClick={handle('contact')}>
             Let's build something
           </a>
         </nav>

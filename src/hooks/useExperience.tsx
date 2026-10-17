@@ -21,9 +21,9 @@ const STORAGE_KEY = 'beyond-the-gate:entered';
 function shouldStartEntered() {
   if (typeof window === 'undefined') return false;
   const { pathname, hash } = window.location;
-  if (pathname.startsWith('/projects/') || hash.startsWith('#/projects/')) return true;
-  // a plain section hash (#projects) — but not a hash-router path like "#/"
-  if (hash && !hash.startsWith('#/') && hash !== '#home') return true;
+  // Any deep link (/about, /projects/kursilo, or #/about in the file build) skips the gate.
+  if (pathname.replace(/\/+$/, '') !== '' && !pathname.endsWith('/index.html')) return true;
+  if (hash.startsWith('#/') && hash.length > 2) return true;
   try {
     return sessionStorage.getItem(STORAGE_KEY) === '1';
   } catch {

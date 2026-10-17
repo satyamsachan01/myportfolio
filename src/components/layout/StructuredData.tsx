@@ -4,6 +4,8 @@ import { profile, siteUrl } from '../../data/profile';
 /** Person + WebSite JSON-LD built from profile.ts. No reviews, ratings or invented credentials. */
 export function StructuredData() {
   useEffect(() => {
+    // Prerendered pages already ship richer JSON-LD in <head>; only add this in the plain SPA build.
+    if (document.querySelector('script[type="application/ld+json"][data-static]')) return;
     const sameAs = Object.values(profile.links).filter(Boolean);
     const data = {
       '@context': 'https://schema.org',

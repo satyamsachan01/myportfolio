@@ -23,7 +23,7 @@ export function About() {
                 <h3>Experience</h3>
                 <ul className="timeline">
                   {about.experience.map((e) => (
-                    <li key={e.title + e.org}><strong>{e.title}</strong> · {e.org}<span>{e.period}</span>{e.detail && <p>{e.detail}</p>}</li>
+                    <li key={e.title + e.org}><strong>{e.title}</strong> · {e.org}{e.period && <span>{e.period}</span>}{e.detail && <p>{e.detail}</p>}</li>
                   ))}
                 </ul>
               </div>
@@ -33,14 +33,14 @@ export function About() {
                 <h3>Education</h3>
                 <ul className="timeline">
                   {about.education.map((e) => (
-                    <li key={e.title}><strong>{e.title}</strong> · {e.org}<span>{e.period}</span></li>
+                    <li key={e.title}><strong>{e.title}</strong> · {e.org}{e.period && <span>{e.period}</span>}</li>
                   ))}
                 </ul>
               </div>
             )}
             {about.achievements.length > 0 && (
               <div className="about__block">
-                <h3>Selected achievements</h3>
+                <h3>Certifications &amp; achievements</h3>
                 <ul className="feature-list">{about.achievements.map((a) => <li key={a}>{a}</li>)}</ul>
               </div>
             )}

@@ -1,4 +1,5 @@
 import { navItems } from '../../data/navigation';
+import { sectionHref } from '../../data/sections';
 import { profile } from '../../data/profile';
 import { useExperience } from '../../hooks/useExperience';
 import { useSectionLink } from '../../hooks/useSectionLink';
@@ -21,9 +22,10 @@ export function Footer() {
           <ul className="footer__links">
             {navItems.map((n) => (
               <li key={n.id}>
-                <a href={n.id === 'home' ? '/' : `/#${n.id}`} onClick={go(n.id)}>{n.label}</a>
+                <a href={sectionHref(n.id)} onClick={go(n.id)}>{n.label}</a>
               </li>
             ))}
+            <li><a href={sectionHref('faq')} onClick={go('faq')}>FAQ</a></li>
           </ul>
         </nav>
         <div>

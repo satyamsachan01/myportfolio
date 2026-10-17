@@ -26,3 +26,13 @@ const accents: Record<ProjectCategory, string> = {
 
 export const categoryLabel = (c: ProjectCategory) => labels[c];
 export const categoryAccent = (c?: ProjectCategory) => (c ? accents[c] : 'var(--accent)');
+
+/** Page title for a project case study, shared by the app and the prerendered HTML. */
+export function projectTitle(p: { title: string; kind: string; categories: ProjectCategory[] }, name: string) {
+  const label =
+    p.kind === 'client' ? `${labels[p.categories[0]]} case study`
+    : p.kind === 'concept' ? 'AI experiment'
+    : p.kind === 'collection' ? 'Portfolio'
+    : `${labels[p.categories[0]]} project`;
+  return `${p.title} | ${label} | ${name}`;
+}

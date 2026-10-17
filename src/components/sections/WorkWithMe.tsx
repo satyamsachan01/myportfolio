@@ -1,4 +1,5 @@
 import { profile } from '../../data/profile';
+import { sectionHref } from '../../data/sections';
 import { useSectionLink } from '../../hooks/useSectionLink';
 import { Reveal } from '../ui/Reveal';
 
@@ -51,7 +52,7 @@ export function WorkWithMe() {
               <p>{w.text}</p>
               <ul className="work__points">{w.points.map((p) => <li key={p}>{p}</li>)}</ul>
               <a
-                href="/#contact"
+                href={sectionHref('contact')}
                 className="btn btn--sm"
                 onClick={(e) => {
                   window.dispatchEvent(new CustomEvent('portfolio:prefill', { detail: w.service }));

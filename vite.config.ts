@@ -6,7 +6,7 @@ import react from '@vitejs/plugin-react';
  * npm run build:site   → website/   Plain files: index.html + assets/ + projects/.
  *                                   Opens by double-click in Chrome and uploads to any hosting (URLs like #/projects/kursilo).
  */
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, isSsrBuild }) => {
   const site = mode === 'site';
   return {
     base: site ? './' : '/',
@@ -16,6 +16,8 @@ export default defineConfig(({ mode }) => {
       target: 'es2020',
       outDir: site ? 'website' : 'dist',
       chunkSizeWarningLimit: 2500,
+      // the SSR bundle only renders the crawlable HTML; it doesn't need the public folder
+      copyPublicDir: !isSsrBuild,
       rollupOptions: site
         ? { output: { format: 'iife', inlineDynamicImports: true, entryFileNames: 'assets/portfolio.js', assetFileNames: 'assets/[name][extname]' } }
         : {},

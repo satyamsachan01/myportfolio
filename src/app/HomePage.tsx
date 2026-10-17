@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
-import { Outlet, useMatch } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { Outlet, useLocation, useMatch } from 'react-router-dom';
+import { sectionForPath } from '../data/sections';
 import { profile } from '../data/profile';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import { useExperience } from '../hooks/useExperience';
@@ -13,31 +14,43 @@ import { ProjectVault } from '../components/sections/ProjectVault';
 import { About } from '../components/sections/About';
 import { WorkWithMe } from '../components/sections/WorkWithMe';
 import { Contact } from '../components/sections/Contact';
+import { Faq } from '../components/sections/Faq';
 
-const HOME_TITLE = `${profile.name} | Full-Stack Developer | WordPress & Shopify Developer | SEO Executive`;
-const HOME_DESC =
-  'Satyam Sachan, Full-Stack Developer, WordPress & Shopify Developer and SEO Executive building custom web applications, e-commerce experiences, search-optimized websites and AI-powered enterprise products.';
-
-function HomeMeta() {
-  useDocumentMeta({ title: HOME_TITLE, description: HOME_DESC, path: '/' });
+function SectionMeta({ pathname }: { pathname: string }) {
+  const section = sectionForPath(pathname);
+  const home = sectionForPath('/')!;
+  useDocumentMeta(
+    section
+      ? { title: section.title, description: section.description, path: section.path, canonicalPath: '/' }
+      : { title: `Page not found | ${profile.name}`, description: home.description, path: pathname, canonicalPath: '/', noindex: true },
+  );
   return null;
 }
 
 export function HomePage() {
+  const { pathname } = useLocation();
   const onProject = useMatch('/projects/:slug');
   const { phase } = useExperience();
+  const first = useRef(true);
+  const lastPath = useRef<string | null>(null);
 
-  // Honour /#section links and project deep links on first load.
+  // Every clean URL (/about, /projects, /services/…) scrolls to its section.
   useEffect(() => {
-    const id = window.location.hash.slice(1);
-    if (id && phase === 'entered') requestAnimationFrame(() => scrollToSection(id));
-    else if (onProject && window.scrollY < 50) document.getElementById('projects')?.scrollIntoView();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (phase !== 'entered') return;
+    const from = lastPath.current;
+    lastPath.current = pathname;
+    const isFirst = first.current;
+    first.current = false;
+    // Opening or closing a case study keeps the page exactly where it is.
+    if (!isFirst && (onProject || from?.startsWith('/projects/'))) return;
+    const target = onProject ? 'projects' : sectionForPath(pathname)?.id;
+    if (!target || (target === 'home' && isFirst)) return;
+    requestAnimationFrame(() => requestAnimationFrame(() => scrollToSection(target, !isFirst)));
+  }, [pathname, phase, onProject]);
 
   return (
     <>
-      {!onProject && <HomeMeta />}
+      {!onProject && <SectionMeta pathname={pathname} />}
       <main id="main" tabIndex={-1}>
         <Hero />
         <WebEngineering />
@@ -47,6 +60,7 @@ export function HomePage() {
         <ProjectVault />
         <WorkWithMe />
         <About />
+        <Faq />
         <Contact />
       </main>
       <Outlet />

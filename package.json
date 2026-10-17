@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "build": "tsc --noEmit -p tsconfig.json && vite build && node scripts/generate-seo-files.mjs",
+    "build": "tsc --noEmit -p tsconfig.json && vite build && vite build --ssr src/seo/entry.tsx --outDir dist-ssr --emptyOutDir && node scripts/prerender.mjs",
     "preview": "vite preview",
     "build:site": "tsc --noEmit -p tsconfig.json && vite build --mode site && node scripts/finish-site.mjs",
     "start": "vite --open"

@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { sectionHref } from '../../data/sections';
 import { motion } from 'framer-motion';
 import { intelligence } from '../../data/services';
 import { useSectionLink } from '../../hooks/useSectionLink';
@@ -181,7 +182,7 @@ export function AIProducts() {
             AI work is shown as clearly labelled experiments and concepts. Live AI demos need a backend that holds API keys or a running local model. Keys never go into frontend code.
           </p>
           <a
-            href="/#projects"
+            href={sectionHref('projects')}
             className="btn world__cta"
             onClick={(e) => {
               setFilter('ai');

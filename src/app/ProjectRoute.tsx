@@ -4,6 +4,7 @@ import { getProject } from '../data/projects';
 import { profile } from '../data/profile';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import { ProjectModal } from '../components/projects/ProjectModal';
+import { projectTitle } from '../utils/categories';
 
 export function ProjectRoute() {
   const { slug = '' } = useParams();
@@ -11,7 +12,7 @@ export function ProjectRoute() {
   const project = getProject(slug);
 
   useDocumentMeta({
-    title: project ? `${project.title}: ${project.subtitle} | ${profile.name}` : `Project not found | ${profile.name}`,
+    title: project ? projectTitle(project, profile.name) : `Project not found | ${profile.name}`,
     description: project?.summary ?? 'This project could not be found in the vault.',
     path: `/projects/${slug}`,
     image: project?.images[0]?.src,
@@ -20,7 +21,7 @@ export function ProjectRoute() {
   const close = useCallback(() => {
     // Return to where the visitor came from inside the site; otherwise go home.
     if ((window.history.state?.idx ?? 0) > 0) navigate(-1);
-    else navigate('/', { preventScrollReset: true });
+    else navigate('/projects', { preventScrollReset: true });
   }, [navigate]);
 
   return <ProjectModal project={project} slug={slug} onClose={close} />;

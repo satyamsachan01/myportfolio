@@ -1,3 +1,5 @@
+import { sectionHref } from '../../data/sections';
+
 interface Props {
   title: string;
   description: string;
@@ -17,7 +19,7 @@ export function ServiceDetail({ title, description, items, cta, onCta, badge }: 
       <ul className="service__items">
         {items.map((i) => <li key={i}>{i}</li>)}
       </ul>
-      <a href="/#projects" className="btn btn--sm service__cta" onClick={onCta}>
+      <a href={sectionHref('projects')} className="btn btn--sm service__cta" onClick={onCta}>
         {cta} <span className="arrow" aria-hidden="true">→</span>
       </a>
     </div>

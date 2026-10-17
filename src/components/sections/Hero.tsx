@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { sectionHref } from '../../data/sections';
 import { profile } from '../../data/profile';
 import { proof } from '../../data/projects';
 import { chapters } from '../../data/story';
@@ -54,9 +55,9 @@ export function Hero() {
         <motion.p className="hero__lead" {...item(0.95)}>{profile.heroParagraph}</motion.p>
 
         <motion.div className="hero__actions" {...item(1.05)}>
-          <a href="/#projects" className="btn btn--primary" onClick={go('projects')}>Explore my work <span className="arrow" aria-hidden="true">→</span></a>
+          <a href={sectionHref('projects')} className="btn btn--primary" onClick={go('projects')}>Explore my work <span className="arrow" aria-hidden="true">→</span></a>
           {profile.resumeUrl && <a href={profile.resumeUrl} className="btn" target="_blank" rel="noopener noreferrer">View resume</a>}
-          <a href="/#contact" className="btn btn--ghost" onClick={go('contact')}>Let's connect</a>
+          <a href={sectionHref('contact')} className="btn btn--ghost" onClick={go('contact')}>Let's connect</a>
         </motion.div>
 
         <motion.div className="hero__bottom" {...item(1.2)}>
@@ -69,7 +70,7 @@ export function Hero() {
         </motion.div>
       </div>
 
-      <motion.a href="/#engineering" className="hero__scroll" onClick={go('engineering')} aria-label="Scroll to the first world" {...item(1.6)}>
+      <motion.a href={sectionHref('engineering')} className="hero__scroll" onClick={go('engineering')} aria-label="Scroll to the first world" {...item(1.6)}>
         <span>Walk in</span>
         <i aria-hidden="true" />
       </motion.a>

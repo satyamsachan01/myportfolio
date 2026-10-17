@@ -1,4 +1,5 @@
 import { engineering } from '../../data/services';
+import { sectionHref } from '../../data/sections';
 import { getProject } from '../../data/projects';
 import type { Project } from '../../data/types';
 import { useSectionLink } from '../../hooks/useSectionLink';
@@ -37,7 +38,7 @@ export function WebEngineering() {
             {featured.map((p) => <ProjectCard key={p.slug} project={p} compact />)}
           </div>
           <a
-            href="/#projects"
+            href={sectionHref('projects')}
             className="btn world__cta"
             onClick={(e) => {
               setFilter('full-stack');

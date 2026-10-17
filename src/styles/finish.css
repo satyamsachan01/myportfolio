@@ -528,3 +528,30 @@ html { overflow-x: clip; }
 .playground__adv p { margin: 0.7rem 0 1rem; max-width: 80ch; }
 .playground__adv input[type='range'] { width: min(100%, 360px); display: block; margin-top: 0.5rem; accent-color: var(--w-ai); }
 @media (max-width: 860px) { .playground__grid { grid-template-columns: 1fr; } }
+
+/* ── FAQ ── */
+.faq { border-top: 1px solid var(--line); }
+.faq__inner { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+@media (max-width: 960px) { .faq__inner { grid-template-columns: 1fr; } }
+.faq__head { position: sticky; top: calc(var(--nav-h) + 2rem); }
+@media (max-width: 960px) { .faq__head { position: static; } }
+.faq__list { display: grid; gap: 0.6rem; }
+.faq__item { border-radius: 14px; background: var(--glass-bg), rgba(13, 14, 19, 0.72); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); }
+.faq__item summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.05rem 1.2rem; }
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary h3 { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; }
+.faq__item summary span { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--glass-border); color: var(--accent); transition: transform 0.3s var(--ease); }
+.faq__item[open] summary span { transform: rotate(45deg); }
+.faq__item p { padding: 0 1.2rem 1.15rem; color: var(--text-2); font-size: 0.93rem; line-height: 1.65; max-width: 70ch; }
+
+/* Prerendered crawlable content: readable for the moment before the app starts. */
+.ssr { max-width: 860px; margin: 0 auto; padding: 6rem 1.5rem 3rem; color: var(--text-2); font-size: 0.95rem; }
+.ssr h1, .ssr h2, .ssr h3 { color: var(--text); margin: 1.6rem 0 0.6rem; line-height: 1.2; }
+.ssr h1 { font-size: 2.2rem; }
+.ssr ul, .ssr ol { padding-left: 1.2rem; list-style: disc; }
+.ssr a { color: var(--accent); }
+.ssr nav ul { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; list-style: none; padding: 0; }
+.ssr img { max-width: 100%; height: auto; border-radius: 12px; margin: 1rem 0; }
+
+/* Keep the scrollbar's space reserved so locking scroll for the case-study modal never reflows the page. */
+html { scrollbar-gutter: stable; }
