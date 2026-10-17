@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { intelligence } from '../../data/services';
 import { useSectionLink } from '../../hooks/useSectionLink';
 import { useVaultFilter } from '../../hooks/useVaultFilter';
-import { chunkText, rank } from '../../utils/retrieval';
+import { chunkText, rank, tokenize, type Chunk } from '../../utils/retrieval';
 import { KnowledgeChamber } from '../ui/WorldObjects';
 import { SectionHeader } from '../ui/SectionHeader';
 import { Reveal } from '../ui/Reveal';
@@ -41,52 +41,114 @@ function Pipeline() {
   );
 }
 
+const SAMPLE_QUESTIONS = [
+  'How long do refunds take?',
+  'Can I return a product?',
+  'How fast is delivery?',
+  'When is installation support available?',
+];
+
+/** Split text into sentences (keeps the original wording for display). */
+function sentencesOf(text: string): Chunk[] {
+  return text
+    .split(/(?<=[.!?])\s+|\n+/)
+    .map((t) => t.trim())
+    .filter((t) => t.length > 3)
+    .map((t, id) => ({ id, text: t, tokens: tokenize(t) }));
+}
+
+/** Wrap words whose stem matched the question in <mark>. */
+function Highlight({ text, matched }: { text: string; matched: string[] }) {
+  const set = new Set(matched);
+  return (
+    <>
+      {text.split(/(\s+)/).map((part, i) => {
+        const stem = tokenize(part)[0];
+        return stem && set.has(stem) ? <mark key={i}>{part}</mark> : <span key={i}>{part}</span>;
+      })}
+    </>
+  );
+}
+
 function RetrievalPlayground() {
   const [doc, setDoc] = useState(SAMPLE);
   const [size, setSize] = useState(40);
-  const [question, setQuestion] = useState('How long do refunds take?');
+  const [question, setQuestion] = useState(SAMPLE_QUESTIONS[0]);
   const chunks = useMemo(() => chunkText(doc, size, Math.round(size * 0.2)), [doc, size]);
   const results = useMemo(() => rank(question, chunks).slice(0, 3), [question, chunks]);
+  // Best sentence: the one covering the most distinct question words, then the highest score.
+  const answer = useMemo(
+    () => rank(question, sentencesOf(doc)).sort((x, y) => y.matched.length - x.matched.length || y.score - x.score)[0],
+    [question, doc],
+  );
   const top = results[0]?.score ?? 1;
 
   return (
     <div className="playground">
       <div className="playground__head">
-        <h3 className="world__subhead">Retrieval playground</h3>
-        <span className="pill">Runs in your browser · no AI model</span>
+        <div>
+          <h3 className="playground__title">Try it: ask a document</h3>
+          <p className="playground__intro">
+            This is the first step of an AI assistant that answers from a company's own documents. Ask a question and it finds the exact
+            part of the document that answers it, instantly.
+          </p>
+        </div>
+        <span className="pill">Live demo · runs in your browser</span>
       </div>
-      <p className="playground__intro">
-        Stages 02 and 03 of the pipeline, working for real: your text is split into overlapping chunks and ranked against a question with BM25 keyword scoring.
-        A production RAG system would use embeddings and vector search, then send the top chunks to a language model through a secure backend.
-      </p>
+
+      <div className="ask">
+        <label htmlFor="pg-q" className="sr-only">Your question</label>
+        <input id="pg-q" className="ask__input" type="text" value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Ask anything about the document below…" />
+        <div className="ask__chips" role="group" aria-label="Example questions">
+          {SAMPLE_QUESTIONS.map((q) => (
+            <button key={q} type="button" className={`ask__chip ${q === question ? 'is-active' : ''}`} onClick={() => setQuestion(q)}>
+              {q}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="answer" aria-live="polite">
+        <p className="answer__label">Answer found in the document</p>
+        {answer ? (
+          <p className="answer__text"><Highlight text={answer.chunk.text} matched={answer.matched} /></p>
+        ) : (
+          <p className="answer__text answer__text--empty">Nothing in the document matches that question yet. Try one of the examples.</p>
+        )}
+      </div>
+
       <div className="playground__grid">
         <div className="field">
-          <label htmlFor="pg-doc">Document</label>
-          <textarea id="pg-doc" rows={9} value={doc} onChange={(e) => setDoc(e.target.value)} />
-          <div className="field__row">
-            <label htmlFor="pg-size">Chunk size: <strong>{size} words</strong> → {chunks.length} chunks</label>
-            <input id="pg-size" type="range" min={15} max={90} step={5} value={size} onChange={(e) => setSize(Number(e.target.value))} />
-          </div>
+          <label htmlFor="pg-doc">The document <span className="field__opt">(edit it, paste your own)</span></label>
+          <textarea id="pg-doc" rows={8} value={doc} onChange={(e) => setDoc(e.target.value)} />
         </div>
         <div className="field">
-          <label htmlFor="pg-q">Question</label>
-          <input id="pg-q" type="text" value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Ask about the document…" />
-          <ol className="results" aria-live="polite" aria-label="Most relevant chunks">
-            {results.length === 0 && <li className="results__empty">No chunk shares keywords with that question yet.</li>}
-            {results.map((r) => (
+          <p className="field__label">How it decided</p>
+          <ol className="results" aria-label="Most relevant passages">
+            {results.length === 0 && <li className="results__empty">No passage shares words with the question.</li>}
+            {results.map((r, i) => (
               <li key={r.chunk.id}>
                 <div className="results__meta">
-                  <span>Chunk #{r.chunk.id + 1}</span>
+                  <span>{i === 0 ? 'Best match' : `Match ${i + 1}`}</span>
                   <span className="results__bar" style={{ ['--w' as string]: `${(r.score / top) * 100}%` }} aria-hidden="true" />
-                  <span>{r.score.toFixed(2)}</span>
+                  <span>{Math.round((r.score / top) * 100)}%</span>
                 </div>
-                <p>{r.chunk.text}</p>
-                <p className="results__matched">Matched: {r.matched.join(', ')}</p>
+                <p><Highlight text={r.chunk.text} matched={r.matched} /></p>
               </li>
             ))}
           </ol>
         </div>
       </div>
+
+      <details className="playground__adv">
+        <summary>How this works (for developers)</summary>
+        <p>
+          The document is split into overlapping passages and scored against the question with BM25 keyword ranking. A production
+          system (RAG) would use embeddings and vector search, then pass the best passages to a language model through a secure backend.
+        </p>
+        <label htmlFor="pg-size">Passage size: <strong>{size} words</strong>, {chunks.length} passages</label>
+        <input id="pg-size" type="range" min={15} max={90} step={5} value={size} onChange={(e) => setSize(Number(e.target.value))} />
+      </details>
     </div>
   );
 }

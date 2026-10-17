@@ -8,7 +8,12 @@ export interface Chunk {
   tokens: string[];
 }
 
-const STOP = new Set('a an the and or of to in on for is are be with by as at it this that from was were can do does how what which who when where why your you our we i'.split(' '));
+// Common words plus generic question words ("how long does it take") that carry no topic.
+const STOP = new Set(
+  ('a an the and or of to in on for is are be with by as at it this that from was were can do does how what which who when where why your you our we i ' +
+    'my me any take takes long much many get need make fast quick soon there will would should could please')
+    .split(' '),
+);
 
 /** Very light stemmer so "refunds", "refunded" and "refund" match. */
 function stem(w: string) {
